@@ -1,0 +1,23 @@
+{
+  "name": "bootstrap-table-fixed-columns",
+  "main": "bootstrap-table-fixed-columns.js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/wenzhixin/bootstrap-table-fixed-columns",
+  "authors": [
+    "zhixin <wenzhixin2010@gmail.com>"
+  ],
+  "keywords": [
+    "bootstrap",
+    "table",
+    "fixed",
+    "columns"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
