@@ -4,17 +4,19 @@ Fixed Columns extension of [bootstrap-table](https://github.com/wenzhixin/bootst
 
 ## Demo
 
-[Demo](http://issues.wenzhixin.net.cn/bootstrap-table/#extensions/fixed-columns.html)
+* [Via JavaScript](http://issues.wenzhixin.net.cn/bootstrap-table/#extensions/fixed-columns.html)
+* [Via data attributes]()
+* [Fix height]()
 
 ## Options
 
-### fixedColumns
+### data-fixed-columns / fixedColumns
 
 * type: Boolean
 * description: set `true` to enable fixed columns.
 * default: `false`
 
-### fixedNumber
+### data-fixed-number / fixedNumber
 
 * type: Number
 * description: the number of fixed columns.

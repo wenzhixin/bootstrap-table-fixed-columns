@@ -1,6 +1,6 @@
 /**
  * @author zhixin wen <wenzhixin2010@gmail.com>
- * @version: v1.0.0
+ * @version: v1.0.1
  */
 
 (function ($) {
@@ -98,24 +98,55 @@
     };
 
     BootstrapTable.prototype.fitHeaderColumns = function () {
-        this.$fixedHeader.show();
+        var that = this,
+            visibleFields = this.getVisibleFields(),
+            headerWidth = 0;
+
+        this.$body.find('tr:first-child:not(.no-records-found) > *').each(function (i) {
+            var $this = $(this),
+                index = i;
+
+            if (i >= that.options.fixedNumber) {
+                return false;
+            }
+
+            if (that.options.detailView && !that.options.cardView) {
+                index = i - 1;
+            }
+
+            that.$fixedHeader.find('th[data-field="' + visibleFields[index] + '"]')
+                .find('.fht-cell').width($this.innerWidth());
+            headerWidth += $this.outerWidth();
+        });
+        this.$fixedHeader.width(headerWidth + 1).show();
     };
 
     BootstrapTable.prototype.fitBodyColumns = function () {
         var that = this,
-            top = -(parseInt(this.$el.css('margin-top')) - 2);
+            top = -(parseInt(this.$el.css('margin-top')) - 2),
+            height = this.$tableBody.height() - 2;
 
         if (!this.$body.find('> tr[data-index]').length) {
             this.$fixedBody.hide();
             return;
         }
 
+        if (!this.options.height) {
+            top = this.$fixedHeader.height();
+            height = height - top;
+        }
+
         this.$fixedBody.css({
-            width: this.$fixedHeader.innerWidth(),
-            height: this.$tableBody.height() - 2,
+            width: this.$fixedHeader.width(),
+            height: height,
             top: top
         }).show();
 
+        this.$body.find('> tr').each(function (i) {
+            that.$fixedBody.find('tr:eq(' + i + ')').height($(this).height() - 1);
+        });
+
+        // events
         this.$tableBody.on('scroll', function () {
             that.$fixedBody.find('table').css('top', -$(this).scrollTop());
         });
