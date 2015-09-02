@@ -6,7 +6,7 @@ Fixed Columns extension of [bootstrap-table](https://github.com/wenzhixin/bootst
 
 * [Via JavaScript](http://issues.wenzhixin.net.cn/bootstrap-table/#extensions/fixed-columns.html)
 * [Via data attributes](http://jsfiddle.net/wenyi/e3nk137y/2946/)
-* [Fix height](http://jsfiddle.net/wenyi/e3nk137y/2954/)
+* [Fixed height](http://jsfiddle.net/wenyi/e3nk137y/2954/)
 
 ## Options
 
