@@ -51,14 +51,11 @@
 
         this.initFixedColumns();
 
-        var $tr = this.$header.find('tr:eq(0)').clone(),
-            $ths = $tr.find('th');
-
-        $tr.html('');
-        for (var i = 0; i < this.options.fixedNumber; i++) {
-            $tr.append($ths.eq(i).clone());
-        }
-        this.$fixedHeaderColumns.html('').append($tr);
+        var that = this, $trs = this.$header.find('tr').clone();
+        $trs.each(function () {
+            $(this).find('th:gt(' + that.options.fixedNumber + ')').remove();
+        });
+        this.$fixedHeaderColumns.html('').append($trs); 
     };
 
     BootstrapTable.prototype.initBody = function () {
