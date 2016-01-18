@@ -114,11 +114,18 @@
                 index = i - 1;
             }
 
-            that.$fixedHeader.find('th[data-field="' + visibleFields[index] + '"]')
-                .find('.fht-cell').width($this.innerWidth());
+            var th = that.$fixedHeader.find('th[data-field="' + visibleFields[index] + '"]');
+            th.find('.fht-cell').width($this.innerWidth());
             headerWidth += $this.outerWidth();
+
+            th.data("fix-pos", index);
         });
         this.$fixedHeader.width(headerWidth + 1).show();
+
+        // fix click event
+        this.$fixedHeader.delegate("tr th", 'click', function() {
+            $(this).parents(".fixed-table-container").find(".fixed-table-body table thead tr th:eq("+$(this).data("fix-pos")+") .sortable").click();
+        })
     };
 
     BootstrapTable.prototype.fitBodyColumns = function () {
@@ -163,6 +170,12 @@
         }, function () {
             var index = $(this).data('index');
             that.$body.find('> tr[data-index="' + index + '"]').removeClass('hover');
+        });
+
+        // fix td width bug
+        var first_tr = that.$body.find('tr:eq(0)');
+        that.$fixedBody.find('tr:eq(0)').find("td").each(function(index) {
+            $(this).width(first_tr.find("td:eq("+index+")").width())
         });
     };
 
