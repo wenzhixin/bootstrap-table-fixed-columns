@@ -173,9 +173,9 @@
         });
 
         // fix td width bug
-        var first_tr = that.$body.find('tr:eq(0)');
+        var $first_tr = that.$body.find('tr:eq(0)');
         that.$fixedBody.find('tr:eq(0)').find("td").each(function(index) {
-            $(this).width(first_tr.find("td:eq("+index+")").width())
+            $(this).width($first_tr.find("td:eq("+index+")").width())
         });
     };
 
