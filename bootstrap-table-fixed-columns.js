@@ -114,11 +114,11 @@
                 index = i - 1;
             }
 
-            var th = that.$fixedHeader.find('th[data-field="' + visibleFields[index] + '"]');
-            th.find('.fht-cell').width($this.innerWidth());
+            var $th = that.$fixedHeader.find('th[data-field="' + visibleFields[index] + '"]');
+            $th.find('.fht-cell').width($this.innerWidth());
             headerWidth += $this.outerWidth();
 
-            th.data("fix-pos", index);
+            $th.data('fix-pos', index);
         });
         this.$fixedHeader.width(headerWidth + 1).show();
 
