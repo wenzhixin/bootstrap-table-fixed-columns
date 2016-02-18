@@ -65,7 +65,8 @@
             return;
         }
 
-        var that = this;
+        var that = this,
+            rowspan = 0;
 
         this.$fixedBodyColumns.html('');
         this.$body.find('> tr[data-index]').each(function () {
@@ -73,10 +74,19 @@
                 $tds = $tr.find('td');
 
             $tr.html('');
-            for (var i = 0; i < that.options.fixedNumber; i++) {
+            var end = that.options.fixedNumber;
+            if (rowspan > 0) {
+                --end;
+                --rowspan;
+            }
+            for (var i = 0; i < end; i++) {
                 $tr.append($tds.eq(i).clone());
             }
             that.$fixedBodyColumns.append($tr);
+            
+            if ($tds.eq(0).attr('rowspan')){
+            	rowspan = $tds.eq(0).attr('rowspan') - 1;
+            }
         });
     };
 
