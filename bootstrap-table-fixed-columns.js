@@ -131,7 +131,8 @@
     BootstrapTable.prototype.fitBodyColumns = function () {
         var that = this,
             top = -(parseInt(this.$el.css('margin-top')) - 2),
-            height = this.$tableBody.height() - 2;
+            // the fixed height should reduce the scorll-x height
+            height = this.$tableBody.height() - 14;
 
         if (!this.$body.find('> tr[data-index]').length) {
             this.$fixedBody.hide();
