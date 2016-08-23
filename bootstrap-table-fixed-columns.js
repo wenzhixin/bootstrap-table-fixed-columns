@@ -1,6 +1,9 @@
 /**
  * @author zhixin wen <wenzhixin2010@gmail.com>
  * @version: v1.0.1
+ * Modificated 16.08.16 by Aleksej Tokarev (Loecha)
+ *  - Sorting Problem solved
+ *  - Recalculated Size of fixed Columns
  */
 
 (function ($) {
@@ -11,10 +14,11 @@
         fixedNumber: 1
     });
 
-    var BootstrapTable = $.fn.bootstrapTable.Constructor,
-        _initHeader = BootstrapTable.prototype.initHeader,
-        _initBody = BootstrapTable.prototype.initBody,
-        _resetView = BootstrapTable.prototype.resetView;
+    var BootstrapTable  = $.fn.bootstrapTable.Constructor,
+        _initHeader     = BootstrapTable.prototype.initHeader,
+        _initBody       = BootstrapTable.prototype.initBody,
+        _resetView      = BootstrapTable.prototype.resetView,
+        _getCaret       = BootstrapTable.prototype.getCaret;  // Add: Aleksej
 
     BootstrapTable.prototype.initFixedColumns = function () {
         this.$fixedHeader = $([
@@ -51,8 +55,10 @@
 
         this.initFixedColumns();
 
-        var that = this, $trs = this.$header.find('tr').clone();
+        var that = this, $trs = this.$header.find('tr').clone(true); //Fix: Aleksej "clone()" mit "clone(true)" ersetzt
         $trs.each(function () {
+            // This causes layout problems:
+            //$(this).find('th:gt(' + (that.options.fixedNumber -1) + ')').remove(); // Fix: Aleksej "-1" hinnzugefügt. Denn immer eine Spalte Mehr geblieben ist
             $(this).find('th:gt(' + that.options.fixedNumber + ')').remove();
         });
         this.$fixedHeaderColumns.html('').append($trs); 
@@ -88,7 +94,7 @@
             that.$fixedBodyColumns.append($tr);
             
             if ($tds.eq(0).attr('rowspan')){
-            	rowspan = $tds.eq(0).attr('rowspan') - 1;
+                rowspan = $tds.eq(0).attr('rowspan') - 1;
             }
         });
     };
@@ -131,12 +137,55 @@
         this.$fixedHeader.width(headerWidth + 1).show();
     };
 
-    BootstrapTable.prototype.fitBodyColumns = function () {
-        var that = this,
-            top = -(parseInt(this.$el.css('margin-top')) - 2),
-            // the fixed height should reduce the scorll-x height
-            height = this.$tableBody.height() - 14;
+    /**
+    * Add: Aleksej
+    * Hook für getCaret. Aktualisieren Header bei Fixed-Columns wenn diese sortiert wurden
+    * @method getCaret
+    * @for BootstrapTable
+    */
+    BootstrapTable.prototype.getCaret = function () {
+        var result = _getCaret.apply(this, arguments);
 
+        if (this.options.fixedColumns && this.$fixedHeaderColumns instanceof jQuery) {
+            var that = this, $th;
+
+            $.each(this.$fixedHeaderColumns.find('th'), function (i, th) {
+                $th = $(th);
+                $th.find('.sortable').removeClass('desc asc').addClass($th.data('field') === that.options.sortName ? that.options.sortOrder : 'both');
+            });
+        }
+
+     return result;
+    };
+
+    /**
+     * Add: Aleksej, zum berechnen von Scrollbar-Größe
+     * @method calcScrollBarSize
+     * @return Number
+     */
+    BootstrapTable.prototype.calcScrollBarSize = function () {
+        // Es ist egal, ob Höhe oder Breite
+        var tmpWidth        = 100,
+            $container      = $('<div>').css({
+                width       : tmpWidth, 
+                overflow    : 'scroll', 
+                visibility  : 'hidden'}
+            ).appendTo('body'),
+            widthWithScroll = $('<div>').css({
+                width: '100%'
+            }).appendTo($container).outerWidth();
+
+        $container.remove();
+        return tmpWidth - widthWithScroll;
+    };
+
+    BootstrapTable.prototype.fitBodyColumns = function () {
+        var that            = this,
+            borderHeight    = (parseInt(this.$el.css('border-bottom-width')) + parseInt(this.$el.css('border-top-width'))), // Add. Aleksej
+            top             = this.$fixedHeader.outerHeight() + borderHeight, // Fix. Aleksej "-2" mit "+ borderHeight" ersetzt
+            // the fixed height should reduce the scorll-x height
+            height          = this.$tableBody.height() - this.calcScrollBarSize(); // Fix. Aleksej "-14" mit "- this.calcScrollBarSize()" ersetzt
+            
         if (!this.$body.find('> tr[data-index]').length) {
             this.$fixedBody.hide();
             return;
