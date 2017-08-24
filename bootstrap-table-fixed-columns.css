@@ -1,27 +1,30 @@
-.fixed-table-header-columns,
-.fixed-table-body-columns {
+.fixed-table-header-columns-left,.fixed-table-header-columns-right,
+.fixed-table-body-columns-left ,.fixed-table-body-columns-right{
     position: absolute;
     background-color: #fff;
     display: none;
     box-sizing: border-box;
     overflow: hidden;
 }
+.fixed-table-header-columns-right,.fixed-table-body-columns-right{
+    right:0;
+}
+.fixed-table-header-columns-right .table,
+.fixed-table-body-columns-right .table {
+    border-left: 1px solid #dddddd;
+}
 
-.fixed-table-header-columns .table,
-.fixed-table-body-columns .table {
+.fixed-table-header-columns-left .table,
+.fixed-table-body-columns-left .table{
     border-right: 1px solid #ddd;
 }
 
-.fixed-table-header-columns .table.table-no-bordered,
-.fixed-table-body-columns .table.table-no-bordered {
+.fixed-table-header-columns-left .table.table-no-bordered,.fixed-table-header-columns-right .table.table-no-bordered,
+.fixed-table-body-columns-left .table.table-no-bordered ,.fixed-table-body-columns-right .table.table-no-bordered{
     border-right: 1px solid transparent;
 }
 
-.fixed-table-body-columns table {
+.fixed-table-body-columns-left table,.fixed-table-body-columns-right table {
     position: absolute;
     animation: none;
-}
-
-.bootstrap-table .table-hover > tbody > tr.hover > td{
-    background-color: #f5f5f5;
 }
