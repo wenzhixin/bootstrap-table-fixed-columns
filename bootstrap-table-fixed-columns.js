@@ -10,6 +10,10 @@
         fixedColumns: false,
         fixedNumber: 1
     });
+    
+    $.fn.hasHorizontalScrollBar = function() {
+        return this.get(0) ? this.get(0).scrollWidth > this.innerWidth() : false;
+    };
 
     var BootstrapTable = $.fn.bootstrapTable.Constructor,
         _initHeader = BootstrapTable.prototype.initHeader,
@@ -131,8 +135,12 @@
     BootstrapTable.prototype.fitBodyColumns = function () {
         var that = this,
             top = -(parseInt(this.$el.css('margin-top')) - 2),
-            // the fixed height should reduce the scorll-x height
-            height = this.$tableBody.height() - 14;
+            height = 0;
+
+        // the fixed height should reduce the scorll-x height
+        if (this.$tableBody.hasHorizontalScrollBar()) {
+            height = this.$tableBody.height() - 19;
+        }
 
         if (!this.$body.find('> tr[data-index]').length) {
             this.$fixedBody.hide();
