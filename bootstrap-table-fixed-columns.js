@@ -139,7 +139,7 @@
 
         // the fixed height should reduce the scorll-x height
         if (this.$tableBody.hasHorizontalScrollBar()) {
-            height = this.$tableBody.height() - 19;
+            height = this.$tableBody.height() - 18;
         }
 
         if (!this.$body.find('> tr[data-index]').length) {
