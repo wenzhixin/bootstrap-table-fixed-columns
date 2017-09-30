@@ -8,7 +8,7 @@ Fixed Columns extension of [bootstrap-table](https://github.com/wenzhixin/bootst
 * [Via data attributes](http://jsfiddle.net/wenyi/e3nk137y/2946/)
 * [Fixed height](http://jsfiddle.net/wenyi/e3nk137y/2954/)
 
-## Options
+## Old Options
 
 ### data-fixed-columns / fixedColumns
 
@@ -22,6 +22,20 @@ Fixed Columns extension of [bootstrap-table](https://github.com/wenzhixin/bootst
 * description: the number of fixed columns.
 * default: `1`
 
+
+
+## New Options
+### data-fixed-columns / fixedColumns
+
+* type: Boolean
+* description: set `true` to enable fixed columns.
+* default: `false`
+
+### data-fixed-number / fixedNumber
+
+* type: Number
+* description: the number of fixed columns.
+* default: `1`
 ## License
 
 The MIT License.
