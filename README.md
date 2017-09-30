@@ -31,10 +31,16 @@ Fixed Columns extension of [bootstrap-table](https://github.com/wenzhixin/bootst
 * description: set `true` to enable fixed columns.
 * default: `false`
 
-### data-fixed-number / fixedNumber
+### data-fixed-left-number / fixedLeftNumber
 
 * type: Number
-* description: the number of fixed columns.
+* description: the number of left fixed columns.
+* default: `1`
+
+### data-fixed-right-number / fixedRightNumber
+
+* type: Number
+* description: the number of right fixed columns.
 * default: `1`
 ## License
 
