@@ -10,7 +10,7 @@
         fixedColumns: false,
         fixedNumber: 1
     });
-    
+
     $.fn.hasHorizontalScrollBar = function() {
         return this.get(0) ? this.get(0).scrollWidth > this.innerWidth() : false;
     };
@@ -77,7 +77,10 @@
             var $tr = $(this).clone(),
                 $tds = $tr.find('td');
 
-            $tr.html('');
+            var dataIndex = $tr.attr("data-index");
+            $tr = $("<tr></tr>");
+            $tr.attr("data-index", dataIndex);
+            
             var end = that.options.fixedNumber;
             if (rowspan > 0) {
                 --end;
